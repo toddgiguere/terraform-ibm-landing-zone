@@ -148,7 +148,7 @@ locals {
     for cluster in ibm_container_vpc_cluster.cluster : cluster.name => (
       length(data.ibm_container_addons.existing_addons[cluster.name].addons) > 0 &&
       data.ibm_container_addons.existing_addons[cluster.name].addons[0].name == "vpc-block-csi-driver" ?
-      data.ibm_container_addons.existing_addons[cluster.name].addons[0].version : ""
+      data.ibm_container_addons.existing_addons[cluster.name].addons[0].version : null
     )
   }
 
@@ -173,7 +173,7 @@ resource "ibm_container_addons" "addons" {
   # depends_on in 'ibm_container_vpc_worker_pool', just an implicit depends_on on the cluster ID. Cluster ID can exist before
   # 'ibm_container_vpc_cluster' completes, so hence need to add explicit depends on against 'ibm_container_vpc_cluster' here.
   depends_on        = [ibm_container_vpc_cluster.cluster, ibm_container_vpc_worker_pool.pool]
-  for_each          = local.cluster_addons
+  for_each          = { for addon_key, addon_val in local.cluster_addons : addon_key => addon_val if length(addon_val.addons) > 0 }
   cluster           = each.value.id
   resource_group_id = each.value.resource_group_id
 
