@@ -118,7 +118,7 @@ locals {
           #   boot_volume_crk_name = "${var.prefix}-roks-key"
           # }
         ]
-        disable_public_endpoint = !lookup(var.enable_public_web_ingress_vpcs, network)
+        disable_public_endpoint = !contains(var.enable_public_web_ingress_vpcs, network)
       }
     ]
     ##############################################################################
