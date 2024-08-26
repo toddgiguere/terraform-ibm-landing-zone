@@ -281,6 +281,13 @@ variable "operating_system" {
   }
 }
 
+variable "enable_public_web_ingress_vpcs" {
+  type        = list(string)
+  description = "List of VPCs (must match values in `vpcs` list) where public web ingress (ports 80/443) will be allowed."
+  default     = []
+  nullable    = false
+}
+
 ##############################################################################
 
 
