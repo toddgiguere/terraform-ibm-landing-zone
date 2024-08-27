@@ -56,6 +56,13 @@ variable "vpcs" {
   }
 }
 
+variable "public_web_ingress_vpcs" {
+  type        = list(string)
+  description = "List of VPCs (must match values in `vpcs` list) where public web ingress (ports 80/443) will be allowed."
+  default     = []
+  nullable    = false
+}
+
 variable "enable_transit_gateway" {
   description = "Create transit gateway"
   type        = bool
@@ -279,13 +286,6 @@ variable "operating_system" {
     error_message = "RHEL 8 (REDHAT_8_64) or Red Hat Enterprise Linux CoreOS (RHCOS) are the allowed OS values. RHCOS requires VPC clusters created from 4.15 onwards. Upgraded clusters from 4.14 cannot use RHCOS."
     condition     = var.operating_system == null || var.operating_system == "REDHAT_8_64" || var.operating_system == "RHCOS"
   }
-}
-
-variable "public_web_ingress_vpcs" {
-  type        = list(string)
-  description = "List of VPCs (must match values in `vpcs` list) where public web ingress (ports 80/443) will be allowed."
-  default     = []
-  nullable    = false
 }
 
 ##############################################################################
