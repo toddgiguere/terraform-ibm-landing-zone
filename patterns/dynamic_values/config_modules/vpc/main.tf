@@ -20,6 +20,8 @@ module "vpc_address_prefixes" {
 module "network_acls" {
   source                       = "../network_acls"
   vpc_list                     = var.vpc_list
+  public_web_ingress_vpcs      = var.public_web_ingress_vpcs
+  network_cidr                 = var.network_cidr
   use_teleport                 = var.use_teleport
   use_f5                       = var.use_f5
   bastion_vpc_name             = var.bastion_vpc_name

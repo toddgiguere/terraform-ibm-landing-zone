@@ -25,6 +25,19 @@ variable "vpcs" {
   }
 }
 
+variable "network_cidr" {
+  description = "Network CIDR for the VPC. This is used to manage network ACL rules for cluster provisioning."
+  type        = string
+  default     = "10.0.0.0/8"
+}
+
+variable "public_web_ingress_vpcs" {
+  type        = list(string)
+  description = "List of VPCs (must match values in `vpcs` list) where public web ingress (ports 80/443) will be allowed."
+  default     = []
+  nullable    = false
+}
+
 variable "vpc_list" {
   description = "List of VPCs"
   type        = list(string)

@@ -5,6 +5,8 @@
 module "default_network_acls" {
   source                       = "../network_acls"
   vpc_list                     = ["management", "workload"]
+  public_web_ingress_vpcs      = var.public_web_ingress_vpcs
+  network_cidr                 = var.network_cidr
   use_teleport                 = false
   use_f5                       = false
   bastion_vpc_name             = false
@@ -38,6 +40,8 @@ locals {
 module "f5_and_bastion_network_acls" {
   source                       = "../network_acls"
   vpc_list                     = ["management", "workload"]
+  public_web_ingress_vpcs      = []
+  network_cidr                 = "10.0.0.0/8"
   use_teleport                 = true
   use_f5                       = true
   bastion_vpc_name             = "management"

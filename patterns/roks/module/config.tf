@@ -9,6 +9,8 @@ module "dynamic_values" {
   prefix                              = var.prefix
   region                              = var.region
   vpcs                                = var.vpcs
+  network_cidr                        = var.network_cidr
+  public_web_ingress_vpcs             = var.public_web_ingress_vpcs
   hs_crypto_instance_name             = var.hs_crypto_instance_name
   hs_crypto_resource_group            = var.hs_crypto_resource_group
   existing_kms_instance_name          = var.existing_kms_instance_name

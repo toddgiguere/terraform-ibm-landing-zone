@@ -6,6 +6,8 @@ module "vpcs" {
   source                              = "./config_modules/vpc"
   prefix                              = var.prefix
   vpcs                                = var.vpcs
+  network_cidr                        = var.network_cidr
+  public_web_ingress_vpcs             = var.public_web_ingress_vpcs
   vpc_list                            = local.vpc_list
   add_edge_vpc                        = var.add_edge_vpc
   create_f5_network_on_management_vpc = var.create_f5_network_on_management_vpc

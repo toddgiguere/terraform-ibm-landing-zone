@@ -7,6 +7,16 @@ variable "vpc_list" {
   type        = list(string)
 }
 
+variable "public_web_ingress_vpcs" {
+  type        = list(string)
+  description = "List of VPCs (must match values in `vpcs` list) where public web ingress (ports 80/443) will be allowed."
+}
+
+variable "network_cidr" {
+  description = "Network CIDR for the VPC. This is used to manage network ACL rules for cluster provisioning."
+  type        = string
+}
+
 variable "use_teleport" {
   description = "Use teleport"
   type        = bool
@@ -49,7 +59,8 @@ variable "prepend_ibm_rules" {
 ##############################################################################
 
 module "acl_rules" {
-  source = "../acl_rules"
+  network_cidr = var.network_cidr
+  source       = "../acl_rules"
 }
 
 ##############################################################################
@@ -74,7 +85,10 @@ output "value" {
         add_vpc_connectivity_rules   = network == "edge" ? false : var.add_vpc_connectivity_rules
         prepend_ibm_rules            = network == "edge" ? false : var.prepend_ibm_rules
         # Not concatenating default vpc rules (acl_rules) as it will be added from the SLZ-VPC module, preventing the duplication of ACLs
-        rules = network_acl != network ? module.acl_rules[network_acl] : []
+        rules = concat(
+          network_acl != network ? module.acl_rules[network_acl] : [],
+          contains(var.public_web_ingress_vpcs, network) ? module.acl_rules["public_web_ingress"] : []
+        )
       }
     ]
   }
