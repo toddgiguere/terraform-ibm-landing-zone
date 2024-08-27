@@ -104,7 +104,7 @@ module "roks_landing_zone" {
   teleport_management_zones              = var.teleport_management_zones
   IC_SCHEMATICS_WORKSPACE_ID             = var.IC_SCHEMATICS_WORKSPACE_ID
   kms_wait_for_apply                     = var.kms_wait_for_apply
-  enable_public_web_ingress_vpcs         = var.enable_public_web_ingress_vpcs
+  public_web_ingress_vpcs                = var.public_web_ingress_vpcs
 }
 
 moved {
